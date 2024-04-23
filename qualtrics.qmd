@@ -1,0 +1,41 @@
+---
+title: "qualtrics_survey"
+format: html
+editor: visual
+---
+
+## Qualtrics is a survey platform
+
+We have a survey named `Test Survey` in use.
+
+```{r setup}
+library(tidyverse)
+library(qualtRics)
+```
+
+Note that the qualtrics API key is stored in Renviron.
+
+Let's use this to ready in data from `Test Survey`.
+
+Set up credentials.
+
+```{r}
+#| echo: false
+qualtrics_api_credentials(api_key = Sys.getenv("QUALTRICS_API_KEY"), 
+                          base_url = "yul1.qualtrics.com",
+                          overwrite = TRUE)
+```
+
+Now we can read in some data.
+
+```{r read}
+surveys <- all_surveys()
+head(surveys)
+```
+
+Now read in data from `Test Survey`.
+
+```{r}
+my_survey <- fetch_survey(surveyID = 'SV_5omMPxaTCy2m0Ki')
+head(my_survey)
+```
