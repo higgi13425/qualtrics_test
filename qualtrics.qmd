@@ -13,11 +13,17 @@ library(tidyverse)
 library(qualtRics)
 ```
 
-Note that the qualtrics API key is stored in Renviron.
+Note that the qualtrics API key is stored in .Renviron.
 
 Let's use this to ready in data from `Test Survey`.
 
 Set up credentials.
+
+Note that we had to change base url because it was being proxied.
+
+Per issue #339 for the qualtrics package.
+
+<https://github.com/ropensci/qualtRics/issues/339>
 
 ```{r}
 #| echo: false
