@@ -43,5 +43,8 @@ Now read in data from `Test Survey`.
 
 ```{r}
 my_survey <- fetch_survey(surveyID = 'SV_5omMPxaTCy2m0Ki')
-head(my_survey)
+my_survey |> 
+  select(Q2:Q4_3) |> 
+  purrr::set_names(c('name', 'fav_color', 'anxiety', 'depression', 'happiness')) |> 
+  head()
 ```
