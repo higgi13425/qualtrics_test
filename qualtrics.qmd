@@ -28,8 +28,8 @@ Per issue #339 for the qualtrics package.
 ```{r}
 #| echo: false
 qualtrics_api_credentials(api_key = Sys.getenv("QUALTRICS_API_KEY"), 
-                          base_url = "yul1.qualtrics.com",
-                          overwrite = TRUE)
+                  base_url = "yul1.qualtrics.com",
+                  overwrite = TRUE)
 ```
 
 Now we can read in some data from our survey.
