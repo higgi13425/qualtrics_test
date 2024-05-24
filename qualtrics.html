@@ -103,7 +103,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>── Attaching core tidyverse packages ──── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.0     ✔ tibble    3.2.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
 ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
 ✔ purrr     1.0.2     
 ── Conflicts ────────────────────── tidyverse_conflicts() ──
@@ -113,9 +113,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qualtRics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Note that the qualtrics API key is stored in Renviron.</p>
+<p>Note that the qualtrics API key is stored in .Renviron.</p>
 <p>Let’s use this to ready in data from <code>Test Survey</code>.</p>
 <p>Set up credentials.</p>
+<p>Note that we had to change base url because it was being proxied.</p>
+<p>Per issue #339 for the qualtrics package.</p>
+<p><a href="https://github.com/ropensci/qualtRics/issues/339" class="uri">https://github.com/ropensci/qualtRics/issues/339</a></p>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
 <pre><code>To install your credentials for use in future sessions, run this function with `install = TRUE`.</code></pre>
@@ -130,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   id        name  ownerId lastModified creationDate isActive
   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;        &lt;lgl&gt;   
 1 SV_5omMP… Test… UR_6Go… 2024-04-23T… 2024-04-23T… TRUE    
-2 SV_0D0b2… Macr… UR_55e… 2024-04-02T… 2023-11-16T… FALSE   
+2 SV_0D0b2… Macr… UR_55e… 2024-05-10T… 2023-11-16T… FALSE   
 3 SV_3frY6… QI I… UR_6Xt… 2023-07-28T… 2023-04-20T… FALSE   </code></pre>
 </div>
 </div>
@@ -167,23 +170,25 @@ cols(
 )
 ℹ Use `spec()` for the full column specifications.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_survey)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>'StartDate', 'EndDate', and 'RecordedDate' were converted without a specific timezone
+• To set a timezone, visit https://www.qualtrics.com/support/survey-platform/managing-your-account/
+• Timezone information is under 'User Settings'
+• See https://api.qualtrics.com/instructions/docs/Instructions/dates-and-times.md for more</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>my_survey <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Q2<span class="sc">:</span>Q4_3) <span class="sc">|&gt;</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">set_names</span>(<span class="fu">c</span>(<span class="st">'name'</span>, <span class="st">'fav_color'</span>, <span class="st">'anxiety'</span>, <span class="st">'depression'</span>, <span class="st">'happiness'</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 22
-  StartDate           EndDate             Status   IPAddress
-  &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;    &lt;chr&gt;    
-1 2024-04-22 21:27:04 2024-04-22 21:27:22 IP Addr… 99.113.1…
-2 2024-04-22 21:27:30 2024-04-22 21:27:44 IP Addr… 99.113.1…
-3 2024-04-22 21:27:50 2024-04-22 21:28:04 IP Addr… 99.113.1…
-4 2024-04-22 21:28:11 2024-04-22 21:28:24 IP Addr… 99.113.1…
-5 2024-04-22 21:28:32 2024-04-22 21:28:47 IP Addr… 99.113.1…
-# ℹ 18 more variables: Progress &lt;dbl&gt;,
-#   `Duration (in seconds)` &lt;dbl&gt;, Finished &lt;lgl&gt;,
-#   RecordedDate &lt;dttm&gt;, ResponseId &lt;chr&gt;,
-#   RecipientLastName &lt;lgl&gt;, RecipientFirstName &lt;lgl&gt;,
-#   RecipientEmail &lt;lgl&gt;, ExternalReference &lt;lgl&gt;,
-#   LocationLatitude &lt;dbl&gt;, LocationLongitude &lt;dbl&gt;,
-#   DistributionChannel &lt;chr&gt;, UserLanguage &lt;chr&gt;, …</code></pre>
+<pre><code># A tibble: 5 × 5
+  name    fav_color anxiety depression happiness
+  &lt;chr&gt;   &lt;ord&gt;       &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 Abel    Red            18         33        64
+2 Baker   Blue           43         19        57
+3 Charlie Red            35         11        84
+4 Dexter  Red            61         72        40
+5 Ethel   Blue           18         59        52</code></pre>
 </div>
 </div>
 </section>
