@@ -32,7 +32,7 @@ qualtrics_api_credentials(api_key = Sys.getenv("QUALTRICS_API_KEY"),
                           overwrite = TRUE)
 ```
 
-Now we can read in some data.
+Now we can read in some data from our survey.
 
 ```{r read}
 surveys <- all_surveys()
