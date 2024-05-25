@@ -57,3 +57,44 @@ my_survey |>
   purrr::set_names(c('name', 'fav_color', 'anxiety', 'depression', 'happiness')) |> 
   head()
 ```
+
+We would not publish the raw data from a survey like this (this one is fake) to a website, as it would be disclosing identifiable information about the participants. Qualtrics is considered HIPAA-compliant.
+
+But we can read in the data and provide ongoing updates/analysis to our colleagues and collaborators with the data. Let's share a plot or two of the incoming data with our colleagues.
+
+### Emotional scores
+
+We have `r nrow(my_survey)` rows of data from `r nrow(my_survey)` participants thus far.
+
+```{r emotions}
+my_survey |> 
+  select(Q2:Q4_3) |> 
+  purrr::set_names(c('name', 'fav_color', 'anxiety', 'depression', 'happiness')) |> 
+  select(anxiety, depression, happiness) |> 
+  pivot_longer(cols = anxiety:happiness, 
+               names_to = 'emotion', 
+               values_to = 'score') |> 
+  ggplot(aes(y = emotion, x = score)) +
+  geom_violin() + geom_point() +
+  theme_linedraw() +
+  theme(legend.position = "none") +
+  labs(title = "Distribution of Emotion Scores")
+```
+
+### Favorite Colors
+
+We have `r nrow(my_survey)` rows of data from `r nrow(my_survey)` participants so far.
+
+```{r colors}
+my_survey |> 
+  select(Q2:Q4_3) |> 
+  purrr::set_names(c('name', 'fav_color', 'anxiety', 'depression', 'happiness')) |> 
+  mutate(value =1) |> 
+  ggplot(aes(x="", y = value, fill = fav_color)) +
+  geom_bar(stat = "identity", width = 1) +
+  theme_linedraw() +
+  theme(legend.position = "none") +
+  labs(title = "Distribution of Favorite Colors") +
+  labs(x = "", y = "Count") +
+  scale_fill_manual(values = c("red", "blue"))
+```
