@@ -9,7 +9,7 @@ name: Quarto Publish
 
 jobs:
   build-deploy:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
