@@ -16,17 +16,21 @@ library(qualtRics)
 
 Note that the qualtrics API key is stored in both my local .Renviron file for rendering locally (good for testing), and in a Github Actions repository secret for running as a Github Action. The GHA is directed by a separate `.github/workflows/publish.yml` file on push (when I push changes to the repo to Github) or on a cron schedule that runs once weekly on Sundays to update the website.
 
-Let's use this to read in data from `Test Survey`.
+We do our editing of this quarto document, and of the `publish.yml`document on the `main` branch, and publish to Github Actions from the `gh-pages` branch.
 
-Note that we had to change our qualtrics site base url from <https://umich.qualtrics.com/> because it was being proxied.
+Let's use this to read in data the from `Test Survey`.
 
-This is per issue #339 for the qualtrics package.
+Note that we had to change our qualtrics site base url from <https://umich.qualtrics.com/> to [`yul1.qualtrics.com`]{.underline} because it was being proxied.
+
+This is per known issue #339 for the qualtrics package.
 
 <https://github.com/ropensci/qualtRics/issues/339>
 
 Details on using the qualtRics package can be found at <https://cran.r-project.org/web/packages/qualtRics/vignettes/qualtRics.html>.
 
 Set up credentials:
+
+Note that we use `Sys.getenv("API_KEY")` to retrieve the specific API key for qualtrics credentials. This works both locally for keys stored in the `.Renviron` file and remotely for Github Actions repository secrets.
 
 ```{r creds}
 #| echo: true
