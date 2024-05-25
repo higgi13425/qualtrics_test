@@ -115,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qualtRics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Note that the qualtrics API key is stored in .Renviron.</p>
+<p>Note that the qualtrics API key is stored in .Renviron for rendering locally, and in a Github Actions repository secret for running as a Github Action. The GHA is directed by a separate <code>.github/workflows/publish.yml</code> file on push or on cron schedule once weekly.</p>
 <p>Let’s use this to ready in data from <code>Test Survey</code>.</p>
 <p>Note that we had to change the qualtrics site base url because it was being proxied.</p>
 <p>Per issue #339 for the qualtrics package.</p>
