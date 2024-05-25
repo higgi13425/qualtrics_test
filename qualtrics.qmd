@@ -13,7 +13,7 @@ library(tidyverse)
 library(qualtRics)
 ```
 
-Note that the qualtrics API key is stored in .Renviron.
+Note that the qualtrics API key is stored in .Renviron for rendering locally, and in a Github Actions repository secret for running as a Github Action. The GHA is directed by a separate `.github/workflows/publish.yml` file on push or on cron schedule once weekly.
 
 Let's use this to ready in data from `Test Survey`.
 
