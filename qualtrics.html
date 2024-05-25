@@ -94,9 +94,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="qualtrics-is-a-survey-platform" class="level2">
-<h2 class="anchored" data-anchor-id="qualtrics-is-a-survey-platform">Qualtrics is a survey platform</h2>
-<p>We have a survey named <code>Test Survey</code> in use.</p>
+<section id="pulling-and-displaying-data-from-a-qualtrics-survey" class="level2">
+<h2 class="anchored" data-anchor-id="pulling-and-displaying-data-from-a-qualtrics-survey">Pulling and Displaying Data from a Qualtrics Survey</h2>
+<p>We have a fake survey about favorite colors and emotions named <code>Test Survey</code> in use in my University of Michigan qualtrics account.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -113,11 +113,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qualtRics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Note that the qualtrics API key is stored in .Renviron.</p>
-<p>Let’s use this to ready in data from <code>Test Survey</code>.</p>
-<p>Note that we had to change the qualtrics site base url because it was being proxied.</p>
-<p>Per issue #339 for the qualtrics package.</p>
+<p>Note that the qualtrics API key is stored in both my local .Renviron file for rendering locally (good for testing), and in a Github Actions repository secret for running as a Github Action. The GHA is directed by a separate <code>.github/workflows/publish.yml</code> file on push (when I push changes to the repo to Github) or on a cron schedule that runs once weekly on Sundays to update the website.</p>
+<p>Let’s use this to read in data from <code>Test Survey</code>.</p>
+<p>Note that we had to change our qualtrics site base url from <a href="https://umich.qualtrics.com/" class="uri">https://umich.qualtrics.com/</a> because it was being proxied.</p>
+<p>This is per issue #339 for the qualtrics package.</p>
 <p><a href="https://github.com/ropensci/qualtRics/issues/339" class="uri">https://github.com/ropensci/qualtRics/issues/339</a></p>
+<p>Details on using the qualtRics package can be found at <a href="https://cran.r-project.org/web/packages/qualtRics/vignettes/qualtRics.html" class="uri">https://cran.r-project.org/web/packages/qualtRics/vignettes/qualtRics.html</a>.</p>
 <p>Set up credentials:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qualtrics_api_credentials</span>(<span class="at">api_key =</span> <span class="fu">Sys.getenv</span>(<span class="st">"QUALTRICS_API_KEY"</span>), </span>
@@ -127,8 +128,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>To install your credentials for use in future sessions, run this function with `install = TRUE`.</code></pre>
 </div>
 </div>
-<p>Now we can read in some data.</p>
-<div class="cell">
+<p>Now we can read in some data on my available surveys.</p>
+<div class="cell" data-warnings="false" data-messages="false">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>surveys <span class="ot">&lt;-</span> <span class="fu">all_surveys</span>()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(surveys)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -140,7 +141,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 3 SV_3frY6eI8T653dsi QI Intake Form … UR_6Xt… 2023-07-28T… 2023-04-20T… FALSE   </code></pre>
 </div>
 </div>
-<p>Now read in some fictional data from <code>Test Survey</code>.</p>
+<p>Now read in some fictional data from one particular <code>Test Survey</code>,<br>
+and display a simple table of responses.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>my_survey <span class="ot">&lt;-</span> <span class="fu">fetch_survey</span>(<span class="at">surveyID =</span> <span class="st">'SV_5omMPxaTCy2m0Ki'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">

@@ -4,24 +4,27 @@ format: html
 editor: visual
 ---
 
-## Qualtrics is a survey platform
+## Pulling and Displaying Data from a Qualtrics Survey
 
-We have a survey named `Test Survey` in use.
+We have a fake survey about favorite colors and emotions named `Test Survey` in use in my University of Michigan qualtrics account.
 
 ```{r setup}
+#| echo: true
 library(tidyverse)
 library(qualtRics)
 ```
 
-Note that the qualtrics API key is stored in .Renviron for rendering locally, and in a Github Actions repository secret for running as a Github Action. The GHA is directed by a separate `.github/workflows/publish.yml` file on push or on cron schedule once weekly.
+Note that the qualtrics API key is stored in both my local .Renviron file for rendering locally (good for testing), and in a Github Actions repository secret for running as a Github Action. The GHA is directed by a separate `.github/workflows/publish.yml` file on push (when I push changes to the repo to Github) or on a cron schedule that runs once weekly on Sundays to update the website.
 
-Let's use this to ready in data from `Test Survey`.
+Let's use this to read in data from `Test Survey`.
 
-Note that we had to change the qualtrics site base url because it was being proxied.
+Note that we had to change our qualtrics site base url from <https://umich.qualtrics.com/> because it was being proxied.
 
-Per issue #339 for the qualtrics package.
+This is per issue #339 for the qualtrics package.
 
 <https://github.com/ropensci/qualtRics/issues/339>
+
+Details on using the qualtRics package can be found at <https://cran.r-project.org/web/packages/qualtRics/vignettes/qualtRics.html>.
 
 Set up credentials:
 
@@ -32,14 +35,17 @@ qualtrics_api_credentials(api_key = Sys.getenv("QUALTRICS_API_KEY"),
                           overwrite = TRUE)
 ```
 
-Now we can read in some data.
+Now we can read in some data on my available surveys.
 
 ```{r read-all-surveys}
+#| warnings: false
+#| messages: false
 surveys <- all_surveys()
 head(surveys)
 ```
 
-Now read in some fictional data from `Test Survey`.
+Now read in some fictional data from one particular `Test Survey`,\
+and display a simple table of responses.
 
 ```{r read-survey}
 my_survey <- fetch_survey(surveyID = 'SV_5omMPxaTCy2m0Ki')
