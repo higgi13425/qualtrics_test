@@ -4,7 +4,7 @@ format: html
 editor: visual
 ---
 
-## Pulling and Displaying Data from a Qualtrics Survey
+## Pulling and Displaying Data from a Qualtrics Survey on a Github Pages Website
 
 We have a fake survey about favorite colors and emotions named `Test Survey` in use in my University of Michigan qualtrics account.
 
