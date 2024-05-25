@@ -116,12 +116,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qualtRics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note that the qualtrics API key is stored in both my local .Renviron file for rendering locally (good for testing), and in a Github Actions repository secret for running as a Github Action. The GHA is directed by a separate <code>.github/workflows/publish.yml</code> file on push (when I push changes to the repo to Github) or on a cron schedule that runs once weekly on Sundays to update the website.</p>
-<p>Let’s use this to read in data from <code>Test Survey</code>.</p>
-<p>Note that we had to change our qualtrics site base url from <a href="https://umich.qualtrics.com/" class="uri">https://umich.qualtrics.com/</a> because it was being proxied.</p>
-<p>This is per issue #339 for the qualtrics package.</p>
+<p>We do our editing of this quarto document, and of the <code>publish.yml</code>document on the <code>main</code> branch, and publish to Github Actions from the <code>gh-pages</code> branch.</p>
+<p>Let’s use this to read in data the from <code>Test Survey</code>.</p>
+<p>Note that we had to change our qualtrics site base url from <a href="https://umich.qualtrics.com/" class="uri">https://umich.qualtrics.com/</a> to <u><code>yul1.qualtrics.com</code></u> because it was being proxied.</p>
+<p>This is per known issue #339 for the qualtrics package.</p>
 <p><a href="https://github.com/ropensci/qualtRics/issues/339" class="uri">https://github.com/ropensci/qualtRics/issues/339</a></p>
 <p>Details on using the qualtRics package can be found at <a href="https://cran.r-project.org/web/packages/qualtRics/vignettes/qualtRics.html" class="uri">https://cran.r-project.org/web/packages/qualtRics/vignettes/qualtRics.html</a>.</p>
 <p>Set up credentials:</p>
+<p>Note that we use <code>Sys.getenv("API_KEY")</code> to retrieve the specific API key for qualtrics credentials. This works both locally for keys stored in the <code>.Renviron</code> file and remotely for Github Actions repository secrets.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qualtrics_api_credentials</span>(<span class="at">api_key =</span> <span class="fu">Sys.getenv</span>(<span class="st">"QUALTRICS_API_KEY"</span>), </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">base_url =</span> <span class="st">"yul1.qualtrics.com"</span>,</span>
