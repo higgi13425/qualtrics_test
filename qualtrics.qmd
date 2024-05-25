@@ -9,7 +9,6 @@ editor: visual
 We have a fake survey about favorite colors and emotions named `Test Survey` in use in my University of Michigan qualtrics account.
 
 ```{r setup}
-#| echo: true
 library(tidyverse)
 library(qualtRics)
 ```
